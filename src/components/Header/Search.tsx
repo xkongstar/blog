@@ -1,12 +1,13 @@
 /* jsxImportSource: react */
-import { useState, useCallback, useRef } from "react";
-import { createPortal } from "react-dom";
-import * as docSearchReact from "@docsearch/react";
-import * as CONFIG from "../../config";
-import "@docsearch/css/dist/style.css";
-import "./Search.css";
+import { useState, useCallback, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import * as docSearchReact from '@docsearch/react';
+import * as CONFIG from '../../config';
+import '@docsearch/css/dist/style.css';
+import './Search.css';
 
-const { DocSearchModal, useDocSearchKeyboardEvents } = docSearchReact;
+const { DocSearchModal, useDocSearchKeyboardEvents } =
+  docSearchReact?.DocSearchModal ? docSearchReact : docSearchReact.default;
 
 export default function Search() {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,9 +75,9 @@ export default function Search() {
               return items.map((item) => {
                 // We transform the absolute URL into a relative URL to
                 // work better on localhost, preview URLS.
-                const a = document.createElement("a");
+                const a = document.createElement('a');
                 a.href = item.url;
-                const hash = a.hash === "#overview" ? "" : a.hash;
+                const hash = a.hash === '#overview' ? '' : a.hash;
                 return {
                   ...item,
                   url: `${a.pathname}${hash}`,
