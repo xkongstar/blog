@@ -1,9 +1,9 @@
 ---
 
 // fetch all commits for just this page's path
-const path = 'src/pages/' + Astro.props.path;
+const path = 'src/pages' + Astro.props.path;
 const url = `https://api.github.com/repos/xkongstar/blog/commits?path=${path}`;
-const commitsURL = `https://github.com/xkongstar/blog/commits/master/${path}`;
+const commitsURL = `https://github.com/xkongstar/blog/commits/master/${path}.md`;
 
 async function getCommits(url) {
 	try {
