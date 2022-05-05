@@ -45,8 +45,11 @@ function removeDups(arr) {
 	}
 	let map = new Map();
 
-	for (let item of arr) {
+	for (let item of arr) {		
 		let author = item.author;
+		if(!author) {
+			continue;
+		}
 		// Deduplicate based on author.id
 		map.set(author.id, { login: author.login, id: author.id });
 	}
@@ -55,9 +58,11 @@ function removeDups(arr) {
 }
 
 const data = await getCommits(url);
+
 const unique = removeDups(data);
 const recentContributors = unique.slice(0, 3); // only show avatars for the 3 most recent contributors
 const additionalContributors = unique.length - recentContributors.length; // list the rest of them as # of extra contributors
+
 ---
 
 <!-- Thanks to @5t3ph for https://smolcss.dev/#smol-avatar-list! -->
