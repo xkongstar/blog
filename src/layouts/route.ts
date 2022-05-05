@@ -1,7 +1,16 @@
 export const SIDEBAR = [
-  { text: "CSS", header: true },
-  { text: "宽度", link: "css/width" },
-
-  { text: "JS", header: true },
-  { text: "Page 411", link: "en/page-4" },
+  {
+    text: 'CSS',
+    module: 'CSS',
+    header: true,
+    link: 'CSS',
+    children: [{ text: '宽度', link: 'CSS/width' }],
+  },
+  {
+    text: 'JS',
+    module: 'JS',
+    header: true,
+    link: 'JS',
+    children: [{ text: '宽度', link: 'JS/width' }],
+  }
 ];

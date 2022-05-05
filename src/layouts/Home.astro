@@ -3,19 +3,21 @@ import HeadCommon from '../components/HeadCommon.astro';
 import HeadSEO from '../components/HeadSEO.astro';
 import Header from '../components/Header/Header.astro';
 import Footer from '../components/Footer/Footer.astro';
-import PageContent from '../components/PageContent/PageContent.astro';
-import LeftSidebar from '../components/LeftSidebar/LeftSidebar.astro';
-import RightSidebar from '../components/RightSidebar/RightSidebar.astro';
 import * as CONFIG from '../config';
+import { SIDEBAR } from './route';
+
 
 const { content = {} } = Astro.props;
 const currentPage = new URL(Astro.request.url).pathname;
 
 const currentFile = `src/pages${currentPage.replace(/\/$/, '')}.md`;
 const githubEditUrl = CONFIG.GITHUB_EDIT_URL && CONFIG.GITHUB_EDIT_URL + currentFile;
+const modules = content.modules || [];
+const showModules = SIDEBAR.filter(item => modules.includes(item.module));
+
 ---
 
-<html dir={content.dir ?? 'ltr'} class="initial">
+<html class="initial">
 	<head>
 		<HeadCommon />
 		<HeadSEO {content} canonicalURL={Astro.canonicalURL} />
@@ -101,24 +103,46 @@ const githubEditUrl = CONFIG.GITHUB_EDIT_URL && CONFIG.GITHUB_EDIT_URL + current
 					display: flex;
 				}
 			}
+
+            .home-site{
+                font-size: 24px;
+            }
+            .home-content{
+                margin-top: 40px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: nowrap;
+            
+            }
+            .content-box{
+                flex: 0 0 30%;
+                height: 160px;
+                line-height: 160px;
+                text-align: center;
+                margin: auto;
+                background-color: bisque;
+            }
 		</style>
 	</head>
 
 	<body>
 		<Header />
 		<main class="layout">
-			<aside id="grid-left" class="grid-sidebar" title="Site Navigation">
-				<LeftSidebar currentPage={currentPage} />
-			</aside>
 			<div id="grid-main">
-				<PageContent {content} {githubEditUrl}>
-					<slot />
-				</PageContent>
+                <div class="home-site">{ content.description }</div>
+                <div class="home-content">
+                    {showModules.map(module => {
+                        return <div class="content-box">
+                            <a href={`${Astro.site.pathname}${module.link}`}>
+									{module.text}
+							</a>
+                            </div>
+                    })}
+                </div>
+				<slot />
 			</div>
-			<aside id="grid-right" class="grid-sidebar" title="Table of Contents">
-				<RightSidebar {content} {githubEditUrl} />
-			</aside>
 		</main>
-		<Footer path={currentPage} />
+		<!-- <Footer /> -->
 	</body>
 </html>
